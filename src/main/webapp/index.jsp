@@ -29,5 +29,7 @@
 <h2>InetAddress: <%=serverAddress %></h2>
 <h2>Hostname: <%=hostname %></h2>
 <h2>Node: <%=node %></h2>
+<h2>Build: BUILD_ID</h2>
+
 </body>
 </html>

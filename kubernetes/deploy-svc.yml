@@ -45,6 +45,7 @@ spec:
 # deployment.apps/webapp-demo-deploy created
 # service/webapp-demo-svc created
 # kubectl set image deploy/webapp-demo-deploy webapp=docker.io/schogini/docker.io/schogini/tc:latest
+# kubectl scale deployment webapp-demo-deploy --replicas 1
 
 # Sree4>kubectl get svc -o wide
 # NAME              TYPE           CLUSTER-IP      EXTERNAL-IP                                                              PORT(S)          AGE       SELECTOR
