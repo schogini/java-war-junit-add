@@ -5,24 +5,60 @@ pipeline {
     }
 
   }
-  stages {
-    stage('Test') {
-      steps {
-        sh 'sudo mvn  test'
-        sh 'sudo rm -fr ./target'
-      }
-    }
-    stage('Build') {
-      steps {
-        sh 'mvn -B -DskipTests package'
-      }
-    }
-    stage('Deploy') {
-      steps {
-        sh '''sudo cp -p ./target/SampleJava1.war /var/lib/tomcat8/webapps/sree-bo2.war
-'''
-        sh 'sudo rm -fr *'
-      }
-    }
+  
+  parameters {
+    string(name: 'JENKINSDIR', defaultValue: '/Users/sree/vms/docker/jenkins/jenkins_home', description: 'The project path in the host machine')
+    string(name: 'MVNCACHE', defaultValue: '/Users/sree/vms/docker/jenkins/2019-feb-1/.m2', description: 'Maven repository cache in the host machine')
+    string(name: 'DOCKER_U', defaultValue: 'schogini', description: 'Docker Hib Username')
+    string(name: 'DOCKER_P', defaultValue: '', description: 'Docker Hub Password')
   }
+    
+  stages {
+
+      stage('Clone') {
+        steps {
+          git url: 'https://github.com/schogini/java-war-junit-add.git'
+          sh '''sed -i \"s/BUILD_ID/${BUILD_ID}/\" src/main/webapp/index.jsp'''
+          sh '''sed -i \"s/BUILD_ID/${BUILD_ID}/\" kubernetes/deploy-svc.yml'''
+          
+        }
+      }
+      
+           stage('Unit Tests') {
+        steps {
+         sh "sudo docker run --rm -i -v ${params.MVNCACHE}:/root/.m2 -v ${params.JENKINSDIR}/workspace/${JOB_BASE_NAME}:/project -w /project maven:3.3-jdk-8 mvn clean test"
+        }
+      }
+      stage('Build Java App') {
+        steps {
+          sh "sudo docker run --rm -i -v ${params.MVNCACHE}:/root/.m2 -v ${params.JENKINSDIR}/workspace/${JOB_BASE_NAME}:/project -w /project maven:3.3-jdk-8 mvn package"
+       }
+      }
+
+      stage('Build Docker Image') {
+        steps {
+          sh 'cp -f target/SampleJava1.war tomcat/webapp.war'
+          sh "sudo docker build -t schogini/tc:${BUILD_ID} tomcat"
+        }
+      }
+      stage('Push Docker Image') {
+        steps {
+          sh "sudo docker login -u=${params.DOCKER_U} -p=${params.DOCKER_P}"
+          sh "sudo docker push schogini/tc:${BUILD_ID}"
+        }
+      }
+      stage('Deploy to Docker Tomcat') {
+        steps {
+      sh "sudo docker inspect my-tcc2 >/dev/null 2>&1 && sudo docker rm -f my-tcc2 || echo No container to remove. Proceed."
+      sh "sudo docker run -id -p 7081:8080 --name my-tcc2 docker.io/schogini/tc:${BUILD_ID}"
+        }
+      }      
+ 
+      stage('Deploy to Kubernetes') {
+        steps {
+      sh "sudo kubectl apply -f kubernetes/deploy-svc.yml"
+        }
+      }
+
+    }
 }
