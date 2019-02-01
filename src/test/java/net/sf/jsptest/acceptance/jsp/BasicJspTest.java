@@ -35,7 +35,7 @@ public class BasicJspTest extends HtmlTestCase {
 
     public void testOutputAssertion() throws Exception {
         get("/index.jsp");
-        output().shouldContain("2018");
+        output().shouldContain("2019"); // Sree
         try {
             output().shouldContain("No such content");
             throw new RuntimeException("Assertion should've failed");
