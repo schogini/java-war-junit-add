@@ -20,6 +20,8 @@ pipeline {
           git url: 'https://github.com/schogini/java-war-junit-add.git'
           sh '''sed -i \"s/BUILD_ID/${BUILD_ID}/\" src/main/webapp/index.jsp'''
           sh '''sed -i \"s/BUILD_ID/${BUILD_ID}/\" kubernetes/deploy-svc.yml'''
+          sh '''sed -i \"s/BUILD_ID/${BUILD_ID}/\" ansible/docker-image-creation.yml'''
+          sh '''sed -i \"s/BUILD_ID/${BUILD_ID}/\" ansible/sample.yml'''
           
         }
       }
@@ -35,9 +37,21 @@ pipeline {
        }
       }
 
-      stage('Build Docker Image') {
+      stage('Docker Image Context') {
         steps {
           sh 'cp -f target/SampleJava1.war tomcat/webapp.war'
+        }
+      }      
+
+      stage('Build-Push Docker Image - Ansible') {
+        steps {
+          # sh "ansible-playbook ansible/docker-image-creation.yml"
+          sh "ansible-playbook -i localhost ansible/sample.yml"
+        }
+      }
+
+      stage('Build Docker Image') {
+        steps {
           sh "sudo docker build -t schogini/tc:${BUILD_ID} tomcat"
         }
       }
@@ -57,6 +71,7 @@ pipeline {
       stage('Deploy to Kubernetes') {
         steps {
       sh "sudo kubectl apply -f kubernetes/deploy-svc.yml"
+      #sh "sudo kubectl set image deploy/webapp-demo-deploy webapp=docker.io/schogini/docker.io/schogini/tc:${BUILD_ID}"
         }
       }
 
