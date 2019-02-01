@@ -4,6 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 import java.time.LocalDateTime;
+import java.net.*;
 
 public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -42,6 +43,23 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
 
       out.write("\n");
       out.write("\n");
+      out.write(" \n");
+
+    String hostname, serverAddress, node;
+    hostname = "[]";
+    serverAddress = "[]";
+    // node="[]";
+    node = System.getenv("HOME");
+    try {
+        InetAddress inetAddress;
+        inetAddress = InetAddress.getLocalHost();
+        hostname = inetAddress.getHostName();
+        serverAddress = inetAddress.toString();
+    } catch (UnknownHostException e) {
+        e.printStackTrace();
+    }
+
+      out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("<html>\n");
       out.write("<body>\n");
@@ -52,6 +70,15 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("</h3>\n");
       out.write("<h2>Current time is ");
       out.print( LocalDateTime.now() );
+      out.write("</h2>\n");
+      out.write("<h2>InetAddress: ");
+      out.print(serverAddress );
+      out.write("</h2>\n");
+      out.write("<h2>Hostname: ");
+      out.print(hostname );
+      out.write("</h2>\n");
+      out.write("<h2>Node: ");
+      out.print(node );
       out.write("</h2>\n");
       out.write("</body>\n");
       out.write("</html>\n");
