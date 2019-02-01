@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.time.LocalDateTime" %>
+<%@ page import="java.net.*" %> 
 <%
     String hostname, serverAddress;
     hostname = "error";
