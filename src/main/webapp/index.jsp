@@ -7,7 +7,7 @@
     hostname = "[]";
     serverAddress = "[]";
     // node="[]";
-    node = System.getenv("HOME");
+    node = System.getenv("NODE");
 
     try {
         InetAddress inetAddress;

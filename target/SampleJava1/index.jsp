@@ -2,11 +2,13 @@
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.net.*" %> 
 <%
+
     String hostname, serverAddress, node;
     hostname = "[]";
     serverAddress = "[]";
     // node="[]";
-    node = System.getenv("HOME");
+    node = System.getenv("NODE");
+
     try {
         InetAddress inetAddress;
         inetAddress = InetAddress.getLocalHost();
@@ -23,6 +25,7 @@
 <h3>Hello from Sree 2017</h3>
 <h3>5+2=<%= 5+2 %></h3>
 <h2>Current time is <%= LocalDateTime.now() %></h2>
+
 <h2>InetAddress: <%=serverAddress %></h2>
 <h2>Hostname: <%=hostname %></h2>
 <h2>Node: <%=node %></h2>

@@ -45,11 +45,13 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write(" \n");
 
+
     String hostname, serverAddress, node;
     hostname = "[]";
     serverAddress = "[]";
     // node="[]";
-    node = System.getenv("HOME");
+    node = System.getenv("NODE");
+
     try {
         InetAddress inetAddress;
         inetAddress = InetAddress.getLocalHost();
@@ -71,6 +73,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<h2>Current time is ");
       out.print( LocalDateTime.now() );
       out.write("</h2>\n");
+      out.write("\n");
       out.write("<h2>InetAddress: ");
       out.print(serverAddress );
       out.write("</h2>\n");
