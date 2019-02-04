@@ -10,7 +10,6 @@ pipeline {
     string(name: 'JENKINSDIR', defaultValue: '/Users/sree/vms/docker/jenkins/jenkins_home', description: 'The project path in the host machine')
     string(name: 'MVNCACHE', defaultValue: '/Users/sree/vms/docker/jenkins/2019-feb-1/.m2', description: 'Maven repository cache in the host machine')
     string(name: 'DOCKER_U', defaultValue: 'schogini', description: 'Docker Hib Username')
-    string(name: 'DOCKER_P', defaultValue: '', description: 'Docker Hub Password')
   }
     
   stages {
@@ -57,7 +56,7 @@ pipeline {
       }
       stage('Push Docker Image') {
         steps {
-          sh "sudo docker login -u=${params.DOCKER_U} -p=${params.DOCKER_P}"
+          sh "cat  ~/.docker-pass|sudo docker login -u=${params.DOCKER_U} --password-stdin"
           sh "sudo docker push schogini/tc:${BUILD_ID}"
         }
       }
