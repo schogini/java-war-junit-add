@@ -41,9 +41,17 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out = pageContext.getOut();
       _jspx_out = out;
 
-      out.write("\n");
-      out.write("\n");
-      out.write(" \n");
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
+      out.write('\n');
 
 
     String hostname, serverAddress, node;
@@ -64,9 +72,10 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("<!DOCTYPE html>\n");
       out.write("<html>\n");
+      out.write("\n");
       out.write("<body>\n");
-      out.write("<h2>Hello World!</h2>\n");
-      out.write("<h3>Hello from Sree 2017</h3>\n");
+      out.write("<h2>Hello World! 2017</h2>\n");
+      out.write("<h3>Hello from Sree 2019 Feb 03 V.3 - Schogini</h3>\n");
       out.write("<h3>5+2=");
       out.print( 5+2 );
       out.write("</h3>\n");
@@ -83,7 +92,52 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<h2>Node: ");
       out.print(node );
       out.write("</h2>\n");
+      out.write("<h2>Build: BUILD_ID</h2>\n");
+      out.write("\n");
+      out.write("Number1:<input id=\"t1\" type=\"text\" name=\"\" value=\"\" /><br></br>\n");
+      out.write("Number2:<input id=\"t2\" type=\"text\" name=\"\" value=\"\" /><br></br>\n");
+      out.write("<input type=\"button\" value=\"Get Sum\" name=\"Get Sum\" id=\"sum\"/>\n");
+      out.write("<div id=\"output\"></div>\n");
+      out.write("\n");
+      out.write("<input type=\"button\" value=\"Vote\" name=\"Vote\" id=\"vote\"/>\n");
+      out.write("<div id=\"voteoutput\"></div>\n");
+      out.write("\n");
       out.write("</body>\n");
+      out.write("<head>\n");
+      out.write("  <script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js\"></script>\n");
+      out.write("      <script type=\"text/javascript\">\n");
+      out.write("          $(document).ready(function() {\n");
+      out.write("              // $(\"#voteoutput\").load(\"http://0.0.0.0:8080/\");\n");
+      out.write("              $('#sum').click(function ()\n");
+      out.write("              {\n");
+      out.write("                  $.ajax({\n");
+      out.write("                      type: \"post\",\n");
+      out.write("                      url: \"/sample-example/add.jsp\", //this is my servlet\n");
+      out.write("                      data: \"t1=\" +$('#t1').val()+\"&amp;t2=\"+$('#t2').val(),\n");
+      out.write("                      success: function(msg){\n");
+      out.write("                          $('#output').html(msg);\n");
+      out.write("                          // alert ('ok');\n");
+      out.write("                      }\n");
+      out.write("                  });\n");
+      out.write("              });\n");
+      out.write("              $('#vote').click(function ()\n");
+      out.write("              {\n");
+      out.write("                  $.ajax({\n");
+      out.write("                      type: \"post\",\n");
+      out.write("                      url: \"http://0.0.0.0:8080/\", //this is my servlet\n");
+      out.write("                      success: function(msg){\n");
+      out.write("                          $('#voteoutput').append(msg);\n");
+      out.write("                          console.log(\"Message\");\n");
+      out.write("                          console.log(msg);\n");
+      out.write("                          alert ('ok - ' + msg);\n");
+      out.write("                      }\n");
+      out.write("                  });\n");
+      out.write("              });\n");
+      out.write("          });\n");
+      out.write("      </script>\n");
+      out.write("  </script>\n");
+      out.write("  <title>JSP Page</title>\n");
+      out.write("</head>\n");
       out.write("</html>\n");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
