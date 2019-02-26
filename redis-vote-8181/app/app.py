@@ -2,11 +2,14 @@ from flask import Flask
 from redis import Redis, RedisError
 import os
 import socket
+from flask_cors import CORS
 
 # Connect to Redis
 redis = Redis(host="redis", db=0, socket_connect_timeout=2, socket_timeout=2)
 
 app = Flask(__name__)
+CORS(app)
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():

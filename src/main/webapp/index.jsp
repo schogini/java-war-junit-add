@@ -65,10 +65,10 @@ Number2:<input id="t2" type="text" name="" value="" /><br></br>
                       type: "post",
                       url: "http://0.0.0.0:8080/", //this is the python script ran using docker-compose up
                       success: function(msg){
-                          $('#voteoutput').append(msg);
-                          console.log("Message");
-                          console.log(msg);
-                          alert ('ok - ' + msg);
+                          $('#voteoutput').html(msg);
+                          // console.log("Message");
+                          // console.log(msg);
+                          // alert ('ok - ' + msg);
                       }
                   });
               });

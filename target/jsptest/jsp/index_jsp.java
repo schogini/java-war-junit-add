@@ -41,17 +41,10 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out = pageContext.getOut();
       _jspx_out = out;
 
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
-      out.write('\n');
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
+      out.write("\n");
 
 
     String hostname, serverAddress, node;
@@ -94,13 +87,13 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("</h2>\n");
       out.write("<h2>Build: BUILD_ID</h2>\n");
       out.write("\n");
+      out.write("<input type=\"button\" value=\"Vote\" name=\"Vote\" id=\"vote\"/>\n");
+      out.write("<div id=\"voteoutput\"></div>\n");
+      out.write("\n");
       out.write("Number1:<input id=\"t1\" type=\"text\" name=\"\" value=\"\" /><br></br>\n");
       out.write("Number2:<input id=\"t2\" type=\"text\" name=\"\" value=\"\" /><br></br>\n");
       out.write("<input type=\"button\" value=\"Get Sum\" name=\"Get Sum\" id=\"sum\"/>\n");
       out.write("<div id=\"output\"></div>\n");
-      out.write("\n");
-      out.write("<input type=\"button\" value=\"Vote\" name=\"Vote\" id=\"vote\"/>\n");
-      out.write("<div id=\"voteoutput\"></div>\n");
       out.write("\n");
       out.write("</body>\n");
       out.write("<head>\n");
@@ -124,12 +117,12 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("              {\n");
       out.write("                  $.ajax({\n");
       out.write("                      type: \"post\",\n");
-      out.write("                      url: \"http://0.0.0.0:8080/\", //this is my servlet\n");
+      out.write("                      url: \"http://0.0.0.0:8080/\", //this is the python script ran using docker-compose up\n");
       out.write("                      success: function(msg){\n");
-      out.write("                          $('#voteoutput').append(msg);\n");
-      out.write("                          console.log(\"Message\");\n");
-      out.write("                          console.log(msg);\n");
-      out.write("                          alert ('ok - ' + msg);\n");
+      out.write("                          $('#voteoutput').html(msg);\n");
+      out.write("                          // console.log(\"Message\");\n");
+      out.write("                          // console.log(msg);\n");
+      out.write("                          // alert ('ok - ' + msg);\n");
       out.write("                      }\n");
       out.write("                  });\n");
       out.write("              });\n");

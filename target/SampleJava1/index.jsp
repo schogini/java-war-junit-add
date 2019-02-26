@@ -1,39 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.net.*" %>
-<%-- <%@ page import="redis.clients.jedis.Jedis" %> --%>
-
-<%-- <%@ page import="com.schogini.*" language="java" %>
-<%@ page import="redis.clients.jedis.Jedis" language="java" %> --%>
-
-<%-- <%
-response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
-response.setHeader("Pragma","no-cache"); //HTTP 1.0
-response.setDateHeader ("Expires", 0); //prevents caching at the proxy server
-%>
-
-<%
-RedisManager.getInstance().connect();
-Jedis jedis = RedisManager.getInstance().getJedis();
-// Jedis jedis = new RedisManager.getInstance();
-jedis.set("foo", "bar");
-String foobar = jedis.get("foo");
-out.println(foobar);
-RedisManager.getInstance().returnJedis(jedis);
-%> --%>
-
-<%-- <%
-
-String jedishost = "localhost";//The access URL is displayed on the console.
-int jedisport = 32768;
-Jedis jedis = new Jedis(jedishost,jedisport);
-jedis.set("foo", "bar");
-String foobar = jedis.get("foo");
-out.println(foobar);
-
-String foonum = jedis.get("number");
-out.println(foonum);
-%> --%>
 
 <%
 
@@ -66,13 +33,13 @@ out.println(foonum);
 <h2>Node: <%=node %></h2>
 <h2>Build: BUILD_ID</h2>
 
+<input type="button" value="Vote" name="Vote" id="vote"/>
+<div id="voteoutput"></div>
+
 Number1:<input id="t1" type="text" name="" value="" /><br></br>
 Number2:<input id="t2" type="text" name="" value="" /><br></br>
 <input type="button" value="Get Sum" name="Get Sum" id="sum"/>
 <div id="output"></div>
-
-<input type="button" value="Vote" name="Vote" id="vote"/>
-<div id="voteoutput"></div>
 
 </body>
 <head>
@@ -96,12 +63,12 @@ Number2:<input id="t2" type="text" name="" value="" /><br></br>
               {
                   $.ajax({
                       type: "post",
-                      url: "http://0.0.0.0:8080/", //this is my servlet
+                      url: "http://0.0.0.0:8080/", //this is the python script ran using docker-compose up
                       success: function(msg){
-                          $('#voteoutput').append(msg);
-                          console.log("Message");
-                          console.log(msg);
-                          alert ('ok - ' + msg);
+                          $('#voteoutput').html(msg);
+                          // console.log("Message");
+                          // console.log(msg);
+                          // alert ('ok - ' + msg);
                       }
                   });
               });
